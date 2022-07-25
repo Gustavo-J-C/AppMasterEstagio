@@ -6,7 +6,7 @@ const Home = (props) => {
   console.log(posts);
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Doação de computadores usados</h1>
       <p>
         {posts.alive? "API online" : "API offline"}
       </p>
