@@ -1,25 +1,14 @@
 import Axios from "axios";
+import Form from './Form'
 
-const Home = (props) => {
-  const posts = props.data;
+const App = (props) => {
 
-  console.log(posts);
   return (
     <div>
-      <h1>Doação de computadores usados</h1>
-      <p>
-        {posts.alive? "API online" : "API offline"}
-      </p>
+      <Form />
     </div>
   );
 };
 
-export default Home;
+export default App;
 
-export const getStaticProps = async () => {
-  const res = await Axios.get("https://doar-computador-api.herokuapp.com");
-  console.log(res);
-  return {
-    props: { data: res.data },
-  };
-};
