@@ -14,14 +14,16 @@ function App() {
     const AddForm = () => {
         const list = listForm
         let amount = document.getElementById('amount')
-        amount.readOnly = true;
         let amountButton = document.getElementById('amountButton')
-        for (let index = 0; index < amount.value; index++) {
-            list.push(1)
+        if (amount.value > 0) {
+            amount.readOnly = true;
+            setListForm(list)
+            setRender(true)
+            amountButton.remove()
+            for (let index = 0; index < amount.value; index++) {
+                list.push(1)
+            }
         }
-        setListForm(list)
-        setRender(true)
-        amountButton.remove()
     }
     
     function RenderForm() {
@@ -172,7 +174,7 @@ function App() {
                     <div className={styles.devicesArea}>
                         <h2>Equipamentos</h2>
                         <label >Quantos equipamentos serão doados? :</label>
-                        <input required type="number" id="amount" name="amount" />
+                        <input required type="number" min="0" id="amount" name="amount" />
                         <button type="button" id="amountButton" className={styles.button} onClick={AddForm}>ok</button>
                         <div className={styles.devicesDiv}>
                             {render ? <RenderForm  /> : null}
@@ -181,7 +183,6 @@ function App() {
                 </div>
                 <br />
                 <br />
-                <button className={styles.button} type="reset">reset</button>
                 <button className={styles.button} type="submit">Enviar</button>
             </form>
         </div>
