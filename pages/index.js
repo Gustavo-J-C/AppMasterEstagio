@@ -14,6 +14,7 @@ function App() {
     const AddForm = () => {
         const list = listForm
         let amount = document.getElementById('amount')
+        console.log(amount.value);
         let amountButton = document.getElementById('amountButton')
         if (amount.value > 0) {
             amount.readOnly = true;
@@ -119,6 +120,18 @@ function App() {
             }
         })
     }
+
+    const handleNumber = (e) => {
+        console.log('uepa');
+        let target = e.target
+        if (target.value <= 100) {
+            target.value = target.value.replace(/[^0-9.]/g, ''); 
+            target.value = target.value.replace(/(\..*)\./g, '$1')
+        } else {
+            target.value = 100
+            alert('valor maximo permitido é de 100 dispositivos por vez')
+        }
+    }
     
     return (
         <div >
@@ -129,12 +142,12 @@ function App() {
                         <label >
                             Primeiro nome: <br />
                             <input defaultValue="" pattern="[a-z]{1,15}" required 
-                            type="text" name="name" 
-                            title="nome deve conter apenas letras minusculas sem numeros ou caracteres especiais"/>
+                            type="text" name="name" placeholder="digite seu nome"
+                            title="Deve ser informado apenas o 1º nome sem espaços, numeros ou caracteres especiais apenas em letras minusculas "/>
                         </label> <br />
                         <label >
                             email: <br />
-                            <input defaultValue="" type="email" name="email" />
+                            <input defaultValue="" placeholder="digite seu email" type="email" name="email" />
                         </label> <br />
                         <label >
                             telefone: <br />                        
@@ -142,31 +155,31 @@ function App() {
                         </label> <br />
                         <label>
                             Cep: <br />
-                            <input name="cep" required type="text" id="cep" defaultValue="" size="10" maxLength="9"/>
+                            <input name="cep" placeholder="digite o CEP" required type="text" id="cep" defaultValue="" size="10" maxLength="9"/>
                             <button type="button" onClick={fetchCEP}>pesquisar</button>
                         </label><br />
                         <label>
                             Rua: <br />
-                            <input name="rua" required type="text" id="rua" size="60" />
+                            <input name="rua" placeholder="digite o nome da rua" required type="text" id="rua" size="60" />
                         </label><br />
                         <label>
                             Bairro: <br />
-                            <input name="bairro" required type="text" id="bairro" size="40" />
+                            <input name="bairro" placeholder="digite bairro" required type="text" id="bairro" size="40" />
                         </label><br />
                         <label>
                             Cidade: <br />
-                            <input name="cidade" required type="text" id="cidade" size="40" />
+                            <input name="cidade" placeholder="digite a cidade" required type="text" id="cidade" size="40" />
                         </label><br />
                         <label>UF: <br />
-                            <input name="uf" required minLength="2" maxLength="2" type="text" id="uf" size="2" />
+                            <input name="uf" placeholder="digite codigo do estado" required minLength="2" maxLength="2" type="text" id="uf" size="2" />
                         </label><br />
                         <label>
                             Numero: <br />
-                            <input name="number" required required type="text" id="number" />
+                            <input name="number" placeholder="digite numero da residencia"required required type="text" id="number" />
                         </label><br />
                         <label>
                             Complemento: <br />
-                            <input name="complement" required type="text" id="complement"/>
+                            <input name="complement" placeholder="digite o complemento" required type="text" id="complement"/>
                         </label><br />
                     </div>
 
@@ -174,7 +187,7 @@ function App() {
                     <div className={styles.devicesArea}>
                         <h2>Equipamentos</h2>
                         <label >Quantos equipamentos serão doados? :</label>
-                        <input required type="number" min="0" id="amount" name="amount" />
+                        <input required type="number" min="0" max="100" onInput={(e) => handleNumber(e)} id="amount" name="amount" />
                         <button type="button" id="amountButton" className={styles.button} onClick={AddForm}>ok</button>
                         <div className={styles.devicesDiv}>
                             {render ? <RenderForm  /> : null}

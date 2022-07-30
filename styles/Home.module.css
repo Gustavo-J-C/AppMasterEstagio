@@ -4,31 +4,26 @@
     height: 70vh;
 }
 
-.textInput {
-    width: 90%;
-    height: 25px;
-}
-
 .button {
     width: 60px;
     margin: 10px;
     height: 30px;
 }
 
-.dataArea {
-
-}
+.dataArea {}
 
 .dataArea input {
     width: 350px;
+    margin-top: 3px;
 }
 .devicesArea {
-    height: 70vh;
+    height: 68vh;
     padding-left: 20px;
     overflow: auto;
 }
 
-.deviceField {
-    margin-top: 10px;
+.deviceField  {
+    width: 400px;
+    margin-top: 15px;
     margin-bottom: 10px;
 }
