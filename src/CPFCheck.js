@@ -2,7 +2,6 @@ import axios from 'axios'
 
 export function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
-    document.getElementById('cep').value=("");
     document.getElementById('rua').value=("");
     document.getElementById('bairro').value=("");
     document.getElementById('cidade').value=("");
@@ -20,7 +19,7 @@ export function meu_callback(data) {
         document.getElementById('bairro').value=(data.bairro);
         document.getElementById('cidade').value=(data.localidade);
         document.getElementById('uf').value=(data.uf);
-        document.getElementById('amount').focus();
+        document.getElementById('number').focus();
     } //end if.
     else {
         //CEP não Encontrado.
@@ -31,7 +30,6 @@ export function meu_callback(data) {
 
 export async function pesquisacep(valor) {
 
-    console.log("valor: ", valor);
     //Nova variável "cep" somente com dígitos.
     var cep = valor ? valor.replace(/\D/g, '') : "";
 
@@ -47,18 +45,16 @@ export async function pesquisacep(valor) {
             
             //Preenche os campos com "..." enquanto consulta webservice.
             
-            document.getElementById('rua').value="...";
-            document.getElementById('bairro').value="...";
-            document.getElementById('cidade').value="...";
-            document.getElementById('uf').value="...";
+            document.getElementById('rua').value="carregando...";
+            document.getElementById('bairro').value="carregando...";
+            document.getElementById('cidade').value="carregando...";
+            document.getElementById('uf').value="carregando...";
             
             //Sincroniza com o callback.
             try {
                 let src = await axios('https://viacep.com.br/ws/'+ cep + '/json/');
-                console.log(src.data);
                 meu_callback(src.data)
             } catch (error) {
-                console.log("log src: ",error);
                 limpa_formulário_cep();
                 alert("Falha com a conexão. \nFavor preencha os dados a mão");
             }
