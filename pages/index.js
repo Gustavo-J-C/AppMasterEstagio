@@ -71,12 +71,11 @@ function App() {
         return newDevices
     }        
 
-    
-
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        
         const form = document.forms.personalDatas
+        let {name, email, phone, cep, rua, bairro, cidade, uf, number, complement, amount} = form
         let devices;
         if (form['type']) {
             setRender(true);
@@ -91,7 +90,28 @@ function App() {
             return
         }
        
-        let {name, email, phone, cep, rua, bairro, cidade, uf, number, complement, amount} = form
+        let user = email.value.substring(0, email.value.indexOf("@"));
+        let domain = email.value.substring(email.value.indexOf("@")+ 1, email.value.length);
+        
+        if (email.value.length == 0) {
+            
+        } else if ((user.length >=1) &&
+            (domain.length >=3) &&
+            (user.search("@")==-1) &&
+            (user.indexOf(".")==-1) &&
+            (domain.search("@")==-1) &&
+            (user.search(" ")==-1) &&
+            (domain.search(" ")==-1) &&
+            (domain.search(".")!=-1) &&
+            (domain.indexOf(".") >=1)&&
+            (domain.lastIndexOf(".") < domain.length - 1)) {
+        }
+        else{
+            alert("E-mail invalido");
+            return false
+        }
+        
+
         let a = document.forms.device
         let updateForm = {};
         axios.post('https://doar-computador-api.herokuapp.com/donation', {
@@ -112,9 +132,9 @@ function App() {
             console.log(response);
         })
         .catch(function (error) {
-            console.log(error.response);
+            console.log(error);
             if (error.response.status == 400) {
-                alert("Os dados " + error.response.data.requiredFields + " não foram preenchidos corretamente")
+                alert(error.response.data.errorMessage)
             } else {
             alert("O servidor falhou em responder tente mais tarde")
             }
@@ -122,7 +142,6 @@ function App() {
     }
 
     const handleNumber = (e) => {
-        console.log('uepa');
         let target = e.target
         if (target.value <= 100) {
             target.value = target.value.replace(/[^0-9.]/g, ''); 
@@ -147,7 +166,7 @@ function App() {
                         </label> <br />
                         <label >
                             email: <br />
-                            <input defaultValue="" placeholder="digite seu email" type="email" name="email" />
+                            <input id="email" defaultValue="" placeholder="digite seu email" type="email" name="email" />
                         </label> <br />
                         <label >
                             telefone: <br />                        
